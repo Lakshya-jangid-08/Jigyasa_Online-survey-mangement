@@ -1,3 +1,9 @@
+## Deployment
+
+The application is deployed and accessible at the following link:
+
+[https://jigyasa-psi.vercel.app/](https://jigyasa-psi.vercel.app/)
+
 # Jigyasa Application
 
 Jigyasa is a survey management and analysis platform that allows users to create, manage, and analyze surveys. The application is built with a React-based frontend and a Django backend.
@@ -58,3 +64,55 @@ Key files and folders:
 1. Navigate to the `FrontEnd` directory:
    ```bash
    cd FrontEnd
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+### Backend Setup
+1. Navigate to the `BackEnd` directory:
+   ```bash
+   cd BackEnd
+   ```
+2. Create and activate a virtual environment (optional but recommended):
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Apply migrations:
+   ```bash
+   python manage.py migrate
+   ```
+5. Start the development server:
+   ```bash
+   python manage.py runserver
+   ```
+
+---
+
+## Running the Application
+1. Ensure both the frontend and backend servers are running.
+2. Open the frontend development server URL (usually `http://localhost:5173`) in your browser.
+3. Use the application to create surveys, analyze data, and manage profiles.
+
+---
+
+## Contributing
+1. Fork the repository and clone it locally.
+2. Create a new branch for your feature or bug fix:
+   ```bash
+   git checkout -b feature-name
+   ```
+3. Commit your changes and push to your fork.
+4. Submit a pull request for review.
+
+---
