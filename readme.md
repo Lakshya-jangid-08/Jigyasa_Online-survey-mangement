@@ -105,14 +105,3 @@ Key files and folders:
 3. Use the application to create surveys, analyze data, and manage profiles.
 
 ---
-
-## Contributing
-1. Fork the repository and clone it locally.
-2. Create a new branch for your feature or bug fix:
-   ```bash
-   git checkout -b feature-name
-   ```
-3. Commit your changes and push to your fork.
-4. Submit a pull request for review.
-
----
