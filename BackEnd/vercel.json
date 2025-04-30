@@ -1,13 +1,13 @@
 {
-    "routes": [
+  "builds": [{
+      "src": "jigyasa_backend/wsgi.py",
+      "use": "@vercel/python",
+      "config": { "maxLambdaSize": "15mb", "runtime": "python3.10" }
+  }],
+  "routes": [
       {
-        "src": "/(.*)",
-        "dest": "jigyasa_backend/wsgi.py"
+          "src": "/(.*)",
+          "dest": "jigyasa_backend/wsgi.py"
       }
-    ],
-    "functions": {
-      "jigyasa_backend/wsgi.py": {
-        "includeFiles": "jigyasa_backend/**"
-      }
-    }
+  ]
 }
