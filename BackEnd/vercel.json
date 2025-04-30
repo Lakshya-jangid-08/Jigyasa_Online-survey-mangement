@@ -14,6 +14,5 @@
         "src": "/(.*)",
         "dest": "jigyasa_backend/wsgi.py"
       }
-    ],
-    "excludeFiles": "tests/**"
+    ]
 }
