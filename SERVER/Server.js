@@ -40,12 +40,17 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(notFound);
 app.use(errorHandler);
 
-// Set port from config
-const PORT = config.server.port;
+// Set port from config or default to 3000 for Vercel
+const PORT = process.env.PORT || config.server.port || 3000;
 
 // Start server
 const server = app.listen(PORT, () => {
   console.log(`Server running in ${config.server.env} mode on port ${PORT}`);
+});
+
+// Add a health check route that Vercel can use
+app.get('/', (req, res) => {
+  res.status(200).json({ message: 'API server is running' });
 });
 
 // Handle unhandled promise rejections

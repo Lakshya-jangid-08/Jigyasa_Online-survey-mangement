@@ -11,5 +11,10 @@
       "src": "/(.*)",
       "dest": "Server.js"
     }
-  ]
+  ],
+  "env": {
+    "NODE_ENV": "production",
+    "API_PREFIX": "/api",
+    "CORS_ORIGIN": "*"
+  }
 }
