@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // CORS middleware with configuration from config
 app.use(cors({
-  origin: config.server.corsOrigin,
+  origin: config.server.corsOrigin || '*',
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
@@ -24,6 +24,16 @@ app.use(cors({
 
 // Set static folder
 app.use(express.static(path.join(__dirname, 'PUBLIC')));
+
+// Explicit root route handler
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'PUBLIC', 'index.html'));
+});
+
+// Health check endpoint for Vercel
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ status: 'ok', message: 'Server is running' });
+});
 
 // Define routes
 app.use('/api/auth', require('./ROUTES/Auth.route'));
@@ -46,11 +56,6 @@ const PORT = process.env.PORT || config.server.port || 3000;
 // Start server
 const server = app.listen(PORT, () => {
   console.log(`Server running in ${config.server.env} mode on port ${PORT}`);
-});
-
-// Add a health check route that Vercel can use
-app.get('/', (req, res) => {
-  res.status(200).json({ message: 'API server is running' });
 });
 
 // Handle unhandled promise rejections

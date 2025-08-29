@@ -6,12 +6,22 @@
             "use": "@vercel/node",
             "config": {
                 "includeFiles": [
-                    "dist/**"
+                    "dist/**",
+                    "PUBLIC/**",
+                    "CONFIG/**",
+                    "CONTROLLERS/**",
+                    "MIDDLEWARE/**",
+                    "MODELS/**",
+                    "ROUTES/**"
                 ]
             }
         }
     ],
     "routes": [
+        {
+            "src": "/api/(.*)",
+            "dest": "Server.js"
+        },
         {
             "src": "/(.*)",
             "dest": "Server.js"
