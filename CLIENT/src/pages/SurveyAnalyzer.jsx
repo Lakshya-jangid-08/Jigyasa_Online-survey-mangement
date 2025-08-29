@@ -19,20 +19,23 @@ const SurveyAnalyzer = () => {
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
     const formData = new FormData();
-    formData.append('file', file);
+    const text = await file.text();
+    formData.append('csvText', text);
 
     setLoading(true);
     setError(null);
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/data-analysis/csv-uploads`, formData, {
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/data-analysis/csv-parse`, formData, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
-          'Content-Type': 'multipart/form-data',
+          'Content-Type': 'application/json',
         },
       });
+      console.log('File upload response:', response.data);
       setColumns(response.data.columns);
       setCsvUploadId(response.data.id);
+      console.log("columns:", response.data.columns);
     } catch (err) {
       console.error('Error uploading file:', err);
       setError('Failed to upload file. Please try again.');
@@ -108,18 +111,18 @@ const SurveyAnalyzer = () => {
     setError(null);
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/data-analysis/plot-data`, {
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/data-analysis/plot-data-parse`, {
         plot_type: plot.type,
         x_axis: plot.xAxis,
-        y_axes: plot.yAxes,
-        csv_upload_id: csvUploadId,
+        y_axis: plot.yAxes,
+        id: csvUploadId,
       }, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
           'Content-Type': 'application/json',
         },
       });
-
+      console.log('Plot data response:', response.data);
       if (response.data.error) {
         setError(response.data.error);
         return;
@@ -146,7 +149,7 @@ const SurveyAnalyzer = () => {
     setError(null);
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/data-analysis/groupby`, {
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/data-analysis/groupby-parse`, {
         columns,
         csv_upload_id: csvUploadId,
       }, {
@@ -202,7 +205,7 @@ const SurveyAnalyzer = () => {
         };
       });
 
-      await axios.post(`${import.meta.env.VITE_BASE_URL}/api/data-analysis/analyses`, {
+      await axios.post(`${import.meta.env.VITE_BASE_URL}/api/data-analysis/analyses-parse`, {
         title: analysisTitle,
         author_name: authorName,
         description,
@@ -216,7 +219,7 @@ const SurveyAnalyzer = () => {
       
       // Show success message using toast instead of alert
       toast.success('Analysis saved successfully!');
-      navigate('/dashboard/analyses');
+      navigate('/dashboard');
     } catch (err) {
       console.error('Error saving analysis:', err);
       
@@ -250,7 +253,7 @@ const SurveyAnalyzer = () => {
     try {
       // First save the analysis if not already saved
       const saveResponse = await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/api/data-analysis/analyses`,
+        `${import.meta.env.VITE_BASE_URL}/api/data-analysis/analyses-parse`,
         {
           title: analysisTitle,
           author_name: authorName,
