@@ -1,30 +1,17 @@
-  {
-    "version": 2,
-    "builds": [
-        {
-            "src": "Server.js",
-            "use": "@vercel/node",
-            "config": {
-                "includeFiles": [
-                    "dist/**",
-                    "PUBLIC/**",
-                    "CONFIG/**",
-                    "CONTROLLERS/**",
-                    "MIDDLEWARE/**",
-                    "MODELS/**",
-                    "ROUTES/**"
-                ]
-            }
-        }
-    ],
-    "routes": [
-        {
-            "src": "/api/(.*)",
-            "dest": "Server.js"
-        },
-        {
-            "src": "/(.*)",
-            "dest": "Server.js"
-        }
-    ]
+
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "Server.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "Server.js",
+      "methods": ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS", "HEAD"]
+    }
+  ]
 }
