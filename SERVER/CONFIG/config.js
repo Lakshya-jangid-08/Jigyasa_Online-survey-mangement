@@ -26,16 +26,6 @@ const config = {
     expiresIn: process.env.JWT_EXPIRES_IN || '1d',
     refreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '7d',
   },
-  
-  // Logging
-  logging: {
-    level: process.env.LOG_LEVEL || 'info',
-  },
-  
-  // File storage
-  storage: {
-    uploadDir: process.env.UPLOAD_DIR,
-  },
 
   // Helper method to check if in production
   isProd: () => process.env.NODE_ENV === 'production',

@@ -34,7 +34,7 @@ app.use('/api/data-analysis', require('./ROUTES/DataAnalysis.route'));
 app.use('/api/api', require('./ROUTES/ApiCompatibility.route')); // Added for frontend compatibility
 
 // Serve static files from uploads folder
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Error handling middleware
 app.use(notFound);
