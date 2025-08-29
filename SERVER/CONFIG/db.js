@@ -3,14 +3,13 @@ const config = require('./config');
 
 const connectDB = async () => {
   try {
-    // Enable mongoose debug mode based on config
-    mongoose.set('debug', config.db.debug);
-    
-    const conn = await mongoose.connect(config.db.uri);
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
+    const connect = mongoose.connect(config.db.uri);
+    return connect;
   } catch (error) {
-    console.error(`Error: ${error.message}`);
-    process.exit(1);
+    console.error(`MongoDB Connection Error: ${error.message}`);
+    // Don't exit the process, return null instead
+    // This allows the server to still run and serve static content
+    return null;
   }
 };
 
