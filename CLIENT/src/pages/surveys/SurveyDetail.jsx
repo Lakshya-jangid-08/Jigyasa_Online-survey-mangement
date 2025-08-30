@@ -13,6 +13,7 @@ const SurveyDetail = () => {
   const [showShareModal, setShowShareModal] = useState(false);
   const [shareUrl, setShareUrl] = useState('');
   const [actionError, setActionError] = useState(null);
+  const [organizationName, setOrganizationName] = useState('');
 
   useEffect(() => {
     if (!id) {
@@ -24,6 +25,16 @@ const SurveyDetail = () => {
     console.log('Loading survey with ID:', id);
     fetchSurvey();
   }, [id]);
+  
+  // Debug the survey state whenever it changes
+  useEffect(() => {
+    if (survey) {
+      console.log('Current survey state:', survey);
+      console.log('Active status:', survey.is_active, survey.isActive);
+      console.log('Organization status:', survey.requires_organization, survey.requiresOrganization);
+      console.log('Organization:', survey.organization);
+    }
+  }, [survey]);
 
   const fetchSurvey = async () => {
     try {
@@ -40,12 +51,60 @@ const SurveyDetail = () => {
         }
       });
 
-      setSurvey(response.data);
+      console.log('Survey data received:', response.data);
+      console.log('Active status:', response.data.is_active, response.data.isActive);
+      console.log('Organization status:', response.data.requires_organization, response.data.requiresOrganization);
+      console.log('Organization:', response.data.organization);
+      console.log('Organization type:', typeof response.data.organization);
+      console.log('Organization ID:', response.data.organization_id);
+      
+      // Fix inconsistent field naming
+      const normalizedSurvey = {
+        ...response.data,
+        is_active: response.data.is_active || response.data.isActive || false,
+        requires_organization: response.data.requires_organization || response.data.requiresOrganization || false
+      };
+
+      setSurvey(normalizedSurvey);
+      
+      // Fetch organization details if we only have an ID
+      if ((normalizedSurvey.organization_id || 
+          (typeof normalizedSurvey.organization === 'string' && !normalizedSurvey.organization.includes(' '))) && 
+          (!normalizedSurvey.organization?.name)) {
+        fetchOrganizationDetails(normalizedSurvey.organization_id || normalizedSurvey.organization);
+      } else if (normalizedSurvey.organization?.name) {
+        setOrganizationName(normalizedSurvey.organization.name);
+      }
+      
       setLoading(false);
     } catch (error) {
       console.error('Error fetching survey:', error);
       setError('Failed to load survey');
       setLoading(false);
+    }
+  };
+  
+  const fetchOrganizationDetails = async (orgId) => {
+    if (!orgId) return;
+    
+    try {
+      const token = localStorage.getItem('access_token');
+      if (!token) return;
+      
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/organizations/${orgId}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      console.log('Organization details:', response.data);
+      if (response.data && response.data.name) {
+        setOrganizationName(response.data.name);
+      }
+    } catch (error) {
+      console.error('Error fetching organization details:', error);
+      // Don't set an error state here to avoid disrupting the main survey display
     }
   };
 
@@ -56,9 +115,19 @@ const SurveyDetail = () => {
 
   const handleShare = () => {
     const baseUrl = window.location.origin;
-    const surveyUrl = `${baseUrl}/survey-response/${survey.creator}/${id}`; // Use creator ID in the URL
+    const surveyUrl = `${baseUrl}/survey-response/${survey.creator || survey.creator?._id}/${id}`; // Use creator ID in the URL
     setShareUrl(surveyUrl);
     setShowShareModal(true);
+    
+    // Show a warning if the survey is organization-specific
+    if (survey.requires_organization || survey.requiresOrganization) {
+      setActionError('Note: This survey is organization-specific. Only users from the same organization can access it.');
+      
+      // Clear the error after 5 seconds
+      setTimeout(() => {
+        setActionError(null);
+      }, 5000);
+    }
   };
 
   const handleDelete = async () => {
@@ -201,15 +270,36 @@ const SurveyDetail = () => {
                 <dt className="text-sm font-medium text-gray-500">Status</dt>
                 <dd className="mt-1 text-sm text-gray-900">
                   <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                    survey.is_active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
+                    survey.is_active || survey.isActive ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
                   }`}>
-                    {survey.is_active ? 'Active' : 'Inactive'}
+                    {survey.is_active || survey.isActive ? 'Active' : 'Inactive'}
                   </span>
                 </dd>
               </div>
               <div className="sm:col-span-1">
                 <dt className="text-sm font-medium text-gray-500">Responses</dt>
                 <dd className="mt-1 text-sm text-gray-900">{survey.responses_count || 0}</dd>
+              </div>
+              <div className="sm:col-span-1">
+                <dt className="text-sm font-medium text-gray-500">Organization-Specific</dt>
+                <dd className="mt-1 text-sm text-gray-900">
+                  <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                    survey.requires_organization || survey.requiresOrganization ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800'
+                  }`}>
+                    {survey.requires_organization || survey.requiresOrganization ? 'Yes' : 'No'}
+                  </span>
+                </dd>
+              </div>
+              <div className="sm:col-span-1">
+                <dt className="text-sm font-medium text-gray-500">Organization</dt>
+                <dd className="mt-1 text-sm text-gray-900">
+                  {organizationName || 
+                   survey.organization?.name || 
+                   (typeof survey.organization === 'string' && survey.organization) ||
+                   (survey.requires_organization || survey.requiresOrganization ? 
+                     (loading ? "Loading organization..." : "Organization required but not specified") : 
+                     "Not organization specific")}
+                </dd>
               </div>
             </dl>
           </div>

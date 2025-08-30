@@ -1,85 +1,172 @@
-import React from 'react';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
-import { ClipboardList, Home, BarChart3, LogOut, Bell, User, Save } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
+import { ClipboardList, Home, BarChart3, LogOut, Bell, User, Save, Menu, X, Building } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 const Layout = () => {
   const { logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  // Handle scroll effect for header
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [location]);
 
   const handleLogout = () => {
     logout();
     navigate('/login');
   };
 
+  const navLinks = [
+    { path: '/dashboard', icon: <Home className="h-4 w-4 mr-1" />, text: 'Dashboard' },
+    { path: '/dashboard/surveys', icon: <ClipboardList className="h-4 w-4 mr-1" />, text: 'All Surveys' },
+    { path: '/dashboard/organization-surveys', icon: <Building className="h-4 w-4 mr-1" />, text: 'Organization Surveys' },
+    { path: '/dashboard/survey-analyzer', icon: <BarChart3 className="h-4 w-4 mr-1" />, text: 'Open Analyzer' },
+    { path: '/dashboard/saved-analyses', icon: <Save className="h-4 w-4 mr-1" />, text: 'Saved Analyses' },
+  ];
+
   return (
     <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white border-b">
+      <nav className={`sticky top-0 z-10 bg-white border-b transition-shadow ${scrolled ? 'shadow-md' : ''}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex">
+          <div className="flex justify-between items-center h-16">
+            {/* Logo - always visible */}
+            <div className="flex-shrink-0">
               <Link to="/dashboard" className="flex items-center">
                 <ClipboardList className="h-8 w-8 text-indigo-600" />
                 <span className="ml-2 text-xl font-bold text-gray-900">Jigyasa</span>
               </Link>
-              <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-                <Link
-                  to="/dashboard"
-                  className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900"
-                >
-                  <Home className="h-4 w-4 mr-1" />
-                  Dashboard
-                </Link>
-                <Link
-                  to="/dashboard/surveys"
-                  className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900"
-                >
-                  <ClipboardList className="h-4 w-4 mr-1" />
-                  All Surveys
-                </Link>
-                <Link
-                  to="/dashboard/organization-surveys"
-                  className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900"
-                >
-                  Organization Surveys
-                </Link>
-                <Link
-                  to="/dashboard/survey-analyzer"
-                  className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900"
-                >
-                  <BarChart3 className="h-4 w-4 mr-1" />
-                  Open Analyzer
-                </Link>
-                <Link
-                  to="/dashboard/saved-analyses"
-                  className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900"
-                >
-                  <Save className="h-4 w-4 mr-1" />
-                  Saved Analyses
-                </Link>
-              </div>
             </div>
-            <div className="flex items-center space-x-4">
-              <Link to="/notifications" className="text-gray-500 hover:text-gray-700">
-                <Bell className="h-6 w-6" />
-              </Link>
-              <Link to="/dashboard/profile" className="text-gray-500 hover:text-gray-700">
-                <div className="flex items-center">
-                  <div className="bg-indigo-100 rounded-full p-1">
+            
+            {/* Right side controls - always visible */}
+            <div className="flex items-center space-x-2">
+              {/* Menu button - always visible */}
+              <div className="flex items-center">
+                <button
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                  className="inline-flex items-center justify-center p-2 rounded-md text-gray-500 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                >
+                  <span className="sr-only">Open menu</span>
+                  {mobileMenuOpen ? (
+                    <X className="block h-6 w-6" aria-hidden="true" />
+                  ) : (
+                    <Menu className="block h-6 w-6" aria-hidden="true" />
+                  )}
+                </button>
+              </div>
+              
+              {/* Profile dropdown - Always visible */}
+              <div className="relative group">
+                <div className="flex items-center cursor-pointer">
+                  <div className="bg-indigo-100 rounded-full p-1 hover:bg-indigo-200 transition-colors">
                     <User className="h-5 w-5 text-indigo-600" />
                   </div>
                 </div>
-              </Link>
-              <button
-                onClick={handleLogout}
-                className="inline-flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md text-gray-500 hover:text-gray-700"
-              >
-                <LogOut className="h-4 w-4 mr-1" />
-                Sign Out
-              </button>
+                
+                {/* Profile dropdown menu - shows on hover/click */}
+                <div className="absolute right-0 w-48 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 py-1 hidden group-hover:block">
+                  <Link 
+                    to="/dashboard/profile" 
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    <div className="flex items-center">
+                      <User className="h-4 w-4 mr-2" />
+                      Your Profile
+                    </div>
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    <div className="flex items-center">
+                      <LogOut className="h-4 w-4 mr-2" />
+                      Sign out
+                    </div>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+        
+        {/* Expanded menu, show/hide based on menu state - for ALL screen sizes */}
+        {mobileMenuOpen && (
+          <div className="absolute top-16 inset-x-0 z-20 bg-white shadow-lg border-b border-gray-200">
+            <div className="pt-2 pb-3 space-y-1 border-t">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className={`block pl-3 pr-4 py-2 text-base font-medium ${
+                    location.pathname === link.path
+                      ? 'bg-indigo-50 border-l-4 border-indigo-500 text-indigo-700'
+                      : 'border-l-4 border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800'
+                  }`}
+                >
+                  <div className="flex items-center">
+                    {link.icon}
+                    {link.text}
+                  </div>
+                </Link>
+              ))}
+              
+              {/* Notifications in menu */}
+              <Link
+                to="/notifications"
+                className="block pl-3 pr-4 py-2 text-base font-medium border-l-4 border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800"
+              >
+                <div className="flex items-center">
+                  <Bell className="h-4 w-4 mr-1" />
+                  Notifications
+                  {/* <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                    New
+                  </span> */}
+                </div>
+              </Link>
+              <div className="border-t border-gray-200 pt-4 pb-3">
+                <div className="px-4 py-2">
+                  <h3 className="text-sm font-medium text-gray-800">Account Settings</h3>
+                </div>
+                
+                <div className="mt-2 space-y-1">
+                  <Link 
+                    to="/dashboard/profile" 
+                    className="block px-4 py-2 text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                  >
+                    <div className="flex items-center">
+                      <User className="h-5 w-5 mr-3 text-gray-500" />
+                      Your Profile
+                    </div>
+                  </Link>
+                  
+                  <button
+                    onClick={handleLogout}
+                    className="w-full text-left px-4 py-2 text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                  >
+                    <div className="flex items-center">
+                      <LogOut className="h-5 w-5 mr-3 text-gray-500" />
+                      Sign Out
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </nav>
 
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">

@@ -38,7 +38,8 @@ const createSurvey = asyncHandler(async (req, res) => {
 // @route   GET /api/surveys
 // @access  Private
 const getSurveys = asyncHandler(async (req, res) => {
-  const surveys = await Survey.find({ creator: req.user.id });
+  const surveys = await Survey.find({ creator: req.user.id })
+    .populate('organization');
   
   // Get response counts for all surveys
   const surveysWithCounts = await Promise.all(surveys.map(async survey => {
@@ -51,6 +52,8 @@ const getSurveys = asyncHandler(async (req, res) => {
     
     // Add consistent date field names
     surveyObject.created_at = surveyObject.createdAt;
+    surveyObject.is_active = surveyObject.isActive;
+    surveyObject.requires_organization = surveyObject.requiresOrganization;
     
     return surveyObject;
   }));
@@ -185,13 +188,29 @@ const getPublicSurvey = asyncHandler(async (req, res) => {
   try {
     const survey = await Survey.findOne({
       _id: surveyId,
-      creator: creatorId,
-      isActive: true
-    });
+      creator: creatorId
+    }).populate('organization');
     
     if (!survey) {
       res.status(404);
-      throw new Error('Survey not found or inactive');
+      throw new Error('Survey not found');
+    }
+    
+    // Check if the survey is inactive
+    if (!survey.isActive) {
+      return res.status(403).json({ error: 'Form currently unavailable' });
+    }
+    
+    // If survey requires organization membership and this is an authenticated request
+    if (req.user && survey.requiresOrganization && survey.organization) {
+      // Get user's organization
+      const userProfile = await UserProfile.findOne({ user: req.user.id }).populate('organization');
+      
+      // Check if user belongs to the required organization
+      if (!userProfile || !userProfile.organization || 
+          userProfile.organization._id.toString() !== survey.organization._id.toString()) {
+        return res.status(403).json({ error: 'Not authorized to access this survey. This survey is only available to members of the same organization.' });
+      }
     }
     
     // Map the survey data to match frontend expectations
@@ -228,31 +247,76 @@ const getPublicSurvey = asyncHandler(async (req, res) => {
 });
 
 // @desc    Get surveys from user's organization
-// @route   GET /api/organization-surveys
+// @route   GET /api/surveys/organization-surveys
 // @access  Private
 const getOrganizationSurveys = asyncHandler(async (req, res) => {
   // Get user's organization
-  const userProfile = await UserProfile.findOne({ user: req.user.id });
+  const userProfile = await UserProfile.findOne({ user: req.user.id }).populate('organization');
   
   if (!userProfile || !userProfile.organization) {
     return res.status(200).json([]);
   }
   
-  // Find surveys from the same organization that are not created by the current user
+  // Find all surveys from the same organization
   const surveys = await Survey.find({
-    organization: userProfile.organization,
-    creator: { $ne: req.user.id },
+    organization: userProfile.organization._id,
     isActive: true
-  });
+  }).populate('creator', 'username email')
+    .populate('organization');
   
-  // Format surveys to include id for consistency
+  // Format surveys to include id for consistency and match frontend expectations
   const formattedSurveys = surveys.map(survey => {
     const surveyObject = survey.toObject();
-    surveyObject.id = surveyObject._id; // Add id field for frontend consistency
+    surveyObject.id = surveyObject._id;
+    surveyObject.created_at = surveyObject.createdAt;
+    surveyObject.updated_at = surveyObject.updatedAt;
+    surveyObject.is_active = surveyObject.isActive;
+    surveyObject.requires_organization = surveyObject.requiresOrganization;
+    
+    // Remove duplicate data
+    delete surveyObject._id;
+    
     return surveyObject;
   });
   
   res.status(200).json(formattedSurveys);
+});
+
+// @desc    Get all public surveys (not requiring organization)
+// @route   GET /api/surveys/public
+// @access  Private
+const getPublicSurveys = asyncHandler(async (req, res) => {
+  try {
+    // Get all public surveys (active and not requiring organization)
+    const surveys = await Survey.find({
+      isActive: true,
+      requiresOrganization: false
+    }).populate('creator', 'username email')
+      .populate('organization');
+    
+    // Format surveys to match frontend expectations
+    const formattedSurveys = surveys.map(survey => {
+      const surveyObject = survey.toObject();
+      surveyObject.id = surveyObject._id;
+      surveyObject.created_at = surveyObject.createdAt;
+      surveyObject.updated_at = surveyObject.updatedAt;
+      surveyObject.is_active = surveyObject.isActive;
+      surveyObject.requires_organization = surveyObject.requiresOrganization;
+      
+      // Remove duplicate data
+      delete surveyObject._id;
+      
+      return surveyObject;
+    });
+    
+    res.status(200).json(formattedSurveys);
+  } catch (error) {
+    console.error('Error fetching public surveys:', error);
+    res.status(500).json({ 
+      error: 'Failed to retrieve public surveys',
+      details: error.message 
+    });
+  }
 });
 
 module.exports = {
@@ -262,5 +326,6 @@ module.exports = {
   updateSurvey,
   deleteSurvey,
   getPublicSurvey,
+  getPublicSurveys,
   getOrganizationSurveys
 };

@@ -68,11 +68,16 @@ const SurveyEdit = () => {
       console.log('Raw survey data from backend:', response.data);
       console.log('Questions from backend:', response.data.questions);
 
-      // Make sure we're using the correct field names
+      // Make sure we're using the correct field names and handle different naming conventions
       const surveyData = {
         ...response.data,
-        organization_id: response.data.organization?.id || null,
-        requires_organization: response.data.requires_organization || false,
+        title: response.data.title || '',
+        description: response.data.description || '',
+        is_active: response.data.is_active !== undefined ? response.data.is_active : 
+                   response.data.isActive !== undefined ? response.data.isActive : true,
+        organization_id: response.data.organization?._id || response.data.organization?.id || null,
+        requires_organization: response.data.requires_organization !== undefined ? response.data.requires_organization : 
+                             response.data.requiresOrganization !== undefined ? response.data.requiresOrganization : false,
         questions: response.data.questions ? response.data.questions.map(q => ({
           id: q.id,
           text: q.text,
@@ -84,6 +89,9 @@ const SurveyEdit = () => {
           })) : []
         })) : []
       };
+      
+      console.log('Active status:', response.data.is_active, response.data.isActive);
+      console.log('Normalized active status:', surveyData.is_active);
 
       console.log('Processed survey data:', surveyData);
       console.log('Processed questions:', surveyData.questions);
@@ -164,7 +172,8 @@ const SurveyEdit = () => {
         description: survey.description,
         is_active: survey.is_active,
         requires_organization: survey.requires_organization,
-        organization_id: survey.requires_organization ? survey.organization_id : null,
+        organization: survey.requires_organization ? survey.organization_id : null,
+        organization_id: survey.requires_organization ? survey.organization_id : null, // Include both formats for compatibility
         questions: survey.questions.map((question, index) => {
           const formattedQuestion = {
             text: question.text,
@@ -361,11 +370,14 @@ const SurveyEdit = () => {
               >
                 <option value="">Select an organization</option>
                 {organizations.map((org) => (
-                  <option key={org.id} value={org.id}>
+                  <option key={org._id || org.id} value={org._id || org.id}>
                     {org.name}
                   </option>
                 ))}
               </select>
+              <p className="text-sm text-gray-500 mt-1">
+                {survey.organization?.name ? `Currently assigned to: ${survey.organization.name}` : ''}
+              </p>
             </div>
           )}
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Plus, Trash2, X } from 'lucide-react';
+import { Plus, Trash2, X, Shield, Globe } from 'lucide-react';
 
 const SurveyCreator = () => {
   const navigate = useNavigate();
@@ -10,15 +10,41 @@ const SurveyCreator = () => {
     description: '',
     requires_organization: false,
     organization_id: '',
+    is_active: true,
     questions: []
   });
   const [organizations, setOrganizations] = useState([]);
+  const [userProfile, setUserProfile] = useState(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchOrganizations();
+    fetchUserProfile();
   }, []);
+
+  const fetchUserProfile = async () => {
+    try {
+      const token = localStorage.getItem('access_token');
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/auth/profile`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      setUserProfile(response.data);
+      
+      // If user has an organization, pre-select it
+      if (response.data.organization) {
+        setFormData(prev => ({
+          ...prev,
+          organization_id: response.data.organization._id
+        }));
+      }
+    } catch (error) {
+      console.error('Error fetching user profile:', error);
+    }
+  };
 
   const fetchOrganizations = async () => {
     try {
@@ -139,11 +165,20 @@ const SurveyCreator = () => {
         return;
       }
       
+      // Validate organization settings
+      if (formData.requires_organization && !formData.organization_id) {
+        setError('Please select an organization if the survey is organization-specific');
+        setLoading(false);
+        return;
+      }
+      
       // Format the data according to the backend's expectations
       const formattedData = {
-        ...formData,
-        is_active: true,
-        ...(formData.requires_organization ? { organization_id: formData.organization_id } : {}),
+        title: formData.title,
+        description: formData.description,
+        requires_organization: formData.requires_organization,
+        organization: formData.organization_id,
+        isActive: formData.is_active,
         questions: formData.questions.map(question => ({
           text: question.text,
           question_type: question.question_type,
@@ -225,7 +260,67 @@ const SurveyCreator = () => {
                 />
               </div>
 
-              <div className="flex items-center">
+              <div className="border border-gray-200 rounded-md p-4">
+                <h4 className="text-md font-medium text-gray-700 mb-3">Survey Settings</h4>
+                
+                <div className="space-y-4">
+                  {/* Organization-specific setting */}
+                  <div className="flex items-center">
+                    <input
+                      type="checkbox"
+                      name="requires_organization"
+                      id="requires_organization"
+                      className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                      checked={formData.requires_organization}
+                      onChange={handleChange}
+                    />
+                    <label htmlFor="requires_organization" className="ml-2 text-sm text-gray-700 inline-flex items-center">
+                      <Shield className="h-4 w-4 mr-1 text-indigo-600" />
+                      Organization-specific survey
+                      <span className="text-xs text-gray-500 ml-2">(Only users from the same organization can access)</span>
+                    </label>
+                  </div>
+                  
+                  {/* Organization selection */}
+                  {formData.requires_organization && (
+                    <div className="pl-6">
+                      <label htmlFor="organization_id" className="block text-sm font-medium text-gray-700">
+                        Select Organization
+                      </label>
+                      <select
+                        name="organization_id"
+                        id="organization_id"
+                        className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                        value={formData.organization_id}
+                        onChange={handleChange}
+                        required={formData.requires_organization}
+                      >
+                        <option value="">Select an organization</option>
+                        {organizations.map(org => (
+                          <option key={org._id} value={org._id}>{org.name}</option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
+                  
+                  {/* Survey active/inactive status */}
+                  <div className="flex items-center">
+                    <input
+                      type="checkbox"
+                      name="is_active"
+                      id="is_active"
+                      className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                      checked={formData.is_active}
+                      onChange={handleChange}
+                    />
+                    <label htmlFor="is_active" className="ml-2 text-sm text-gray-700 flex items-center">
+                      Survey is active
+                      <span className="text-xs text-gray-500 ml-2">(Users can respond to the survey)</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div>
                 <input
                   type="checkbox"
                   name="requires_organization"
