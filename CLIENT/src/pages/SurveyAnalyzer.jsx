@@ -26,7 +26,7 @@ const SurveyAnalyzer = () => {
     setError(null);
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/data-analysis/csv-parse`, formData, {
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/data-analysis/csv-uploads`, formData, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
           'Content-Type': 'application/json',
@@ -111,7 +111,7 @@ const SurveyAnalyzer = () => {
     setError(null);
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/data-analysis/plot-data-parse`, {
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/data-analysis/plot-data`, {
         plot_type: plot.type,
         x_axis: plot.xAxis,
         y_axis: plot.yAxes,
@@ -149,7 +149,7 @@ const SurveyAnalyzer = () => {
     setError(null);
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/data-analysis/groupby-parse`, {
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/data-analysis/groupby`, {
         columns,
         csv_upload_id: csvUploadId,
       }, {
@@ -205,7 +205,7 @@ const SurveyAnalyzer = () => {
         };
       });
 
-      await axios.post(`${import.meta.env.VITE_BASE_URL}/api/data-analysis/analyses-parse`, {
+      await axios.post(`${import.meta.env.VITE_BASE_URL}/api/data-analysis/analyses`, {
         title: analysisTitle,
         author_name: authorName,
         description,
@@ -253,7 +253,7 @@ const SurveyAnalyzer = () => {
     try {
       // First save the analysis if not already saved
       const saveResponse = await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/api/data-analysis/analyses-parse`,
+        `${import.meta.env.VITE_BASE_URL}/api/data-analysis/analyses`,
         {
           title: analysisTitle,
           author_name: authorName,

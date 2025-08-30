@@ -1,4 +1,3 @@
-// Load Vercel-specific configuration first
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
@@ -55,7 +54,6 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || config.server.port || 3000;
   
-  // Start server only if not on Vercel
 app.listen(PORT, () => {
   console.log(`Server running in ${config.server.env} mode on port ${PORT}`);
 });

@@ -157,7 +157,7 @@ const SurveyResponses = () => {
 
     try {
       // Create CSV header with Response ID, Submission Date, and question texts
-      const csvHeaders = ['Response ID', 'Submission Date', 'Time', ...survey.questions.map(q => q.text)].join(',');
+      const csvHeaders = ['Response ID', 'Submission Date', 'Year','Time', ...survey.questions.map(q => q.text)].join(',');
 
       // Create CSV rows with Response ID and answers
       const csvRows = responses.map(response => {
