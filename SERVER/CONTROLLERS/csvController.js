@@ -325,4 +325,74 @@ const getAnalyses2 = async (req, res) => {
     return res.status(200).json(analysis);
 }
 
-module.exports = { parseCsv, generatePlotData2, groupByColumn2, publishAnalysis2, saveAnalysis2 ,getAnalyses2};
+const updateAnalysis2 = async (req, res) =>  {
+    const { title, author_name, description, plots } = req.body;
+    const analysisId = req.params.id;
+
+    const analysis = await Analysis.findById(analysisId);
+    if (!analysis) {
+        res.status(404);
+        throw new Error('Analysis not found');
+    }
+    if (analysis.user.toString() !== req.user.id) {
+        res.status(403);
+        throw new Error('Not authorized to access this analysis');
+    }
+
+    // Update analysis fields
+    analysis.title = title || analysis.title;
+    analysis.authorName = author_name || analysis.authorName;
+    analysis.description = description || analysis.description;
+
+    if (plots && Array.isArray(plots)) {
+      // Transform and validate each plot
+      const validatedPlots = plots.map((plot, index) => {
+        // Check for required fields
+        if (!plot.type) {
+          throw new Error(`Plot #${index + 1} is missing required field: type`);
+        }
+        
+        // For data field, ensure it's present
+        if (!plot.data) {
+          throw new Error(`Plot #${index + 1} is missing required field: data`);
+        }
+        
+        // Ensure each plot has all required fields
+        return {
+          title: plot.title || 'Untitled Plot',
+          type: plot.type,
+          configuration: plot.configuration || {
+            xAxis: '',
+            yAxes: []
+          },
+          data: plot.data
+        };
+      });
+      
+      // Update plots array
+      analysis.plots = validatedPlots || analysis.plots;
+    }
+
+    analysisUpdated = await analysis.save();
+
+    return res.status(200).json({ analysis: analysisUpdated });
+}
+const deleteAnalysis2 = async (req, res) =>  {
+    const analysisId = req.params.id;
+
+    const analysis = await Analysis.findById(analysisId);
+    if (!analysis) {
+        res.status(404);
+        throw new Error('Analysis not found');
+    }
+    if (analysis.user.toString() !== req.user.id) {
+        res.status(403);
+        throw new Error('Not authorized to access this analysis');
+    }
+
+    await analysis.deleteOne();
+
+    return res.status(204).send();
+}
+
+module.exports = { parseCsv, generatePlotData2, groupByColumn2, publishAnalysis2, saveAnalysis2 ,getAnalyses2, updateAnalysis2, deleteAnalysis2 };
