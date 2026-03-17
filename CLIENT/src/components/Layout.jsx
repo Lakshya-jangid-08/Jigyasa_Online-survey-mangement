@@ -47,8 +47,7 @@ const Layout = () => {
             {/* Logo - always visible */}
             <div className="flex-shrink-0">
               <Link to="/dashboard" className="flex items-center">
-                <ClipboardList className="h-8 w-8 text-indigo-600" />
-                <span className="ml-2 text-xl font-bold text-gray-900">Jigyasa</span>
+                <span className="ml-2 text-2xl font-bold text-emerald-700">Jigyasa</span>
               </Link>
             </div>
             

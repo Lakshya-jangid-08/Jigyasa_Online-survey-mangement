@@ -48,7 +48,7 @@ userSchema.pre('save', async function(next) {
   this.updatedAt = Date.now();
   
   if (!this.isModified('password')) {
-    next();
+    return next();
   }
 
   const salt = await bcrypt.genSalt(10);

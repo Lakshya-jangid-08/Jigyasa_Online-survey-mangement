@@ -10,17 +10,17 @@ const jwt = require('jsonwebtoken');
 const registerUser = asyncHandler(async (req, res) => {
   const { username, email, password, password2, organization_id } = req.body;
 
-  if (password !== password2) {
-    res.status(400);
-    throw new Error('Passwords do not match');
-  }
-
-  // Check if user exists
-  const userExists = await User.findOne({ email });
-  if (userExists) {
-    res.status(400);
-    throw new Error('User already exists');
-  }
+    if (password !== password2) {
+      res.status(400);
+      throw new Error('Passwords do not match');
+    }
+    
+    // Check if user exists
+    const userExists = await User.findOne({ email });
+    if (userExists) {
+      res.status(400);
+      throw new Error('User already exists');
+    }
 
   // Create user
   const user = await User.create({

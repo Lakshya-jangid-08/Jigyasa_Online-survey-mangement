@@ -10,6 +10,7 @@ import {
 } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import Layout from './components/Layout';
+import Home from './pages/Home';
 
 // Import future flags for React Router v6.22.1
 import Dashboard from './pages/Dashboard';
@@ -54,7 +55,11 @@ const RootRoute = () => {
     return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
   }
   
-  return <Navigate to={user ? "/dashboard" : "/login"} replace />;
+  if (user) {
+    return <Navigate to="/dashboard" replace />;
+  }
+  
+  return <Home />;
 };
 
 function App() {
