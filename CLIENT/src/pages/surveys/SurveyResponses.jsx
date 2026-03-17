@@ -359,7 +359,7 @@ const SurveyResponses = () => {
         <div className="mb-6 flex justify-between items-center">
           <Link
             to={`/dashboard/surveys/${id}`}
-            className="inline-flex items-center text-indigo-600 hover:text-indigo-900"
+            className="inline-flex items-center text-emerald-600 hover:text-emerald-900"
           >
             <ArrowLeft className="h-4 w-4 mr-1" />
             Back to Survey
@@ -367,14 +367,14 @@ const SurveyResponses = () => {
           <div className="flex space-x-3">
             <button
               onClick={() => setViewMode('summary')}
-              className={`inline-flex items-center px-3 py-2 border text-sm font-medium rounded-md ${viewMode === 'summary' ? 'bg-indigo-100 border-indigo-300 text-indigo-700' : 'border-gray-300 text-gray-700 bg-white hover:bg-gray-50'}`}
+              className={`inline-flex items-center px-3 py-2 border text-sm font-medium rounded-md ${viewMode === 'summary' ? 'bg-emerald-100 border-emerald-300 text-emerald-700' : 'border-gray-300 text-gray-700 bg-white hover:bg-gray-50'}`}
             >
               <BarChart2 className="h-4 w-4 mr-1" />
               Summary
             </button>
             <button
               onClick={() => setViewMode('individual')}
-              className={`inline-flex items-center px-3 py-2 border text-sm font-medium rounded-md ${viewMode === 'individual' ? 'bg-indigo-100 border-indigo-300 text-indigo-700' : 'border-gray-300 text-gray-700 bg-white hover:bg-gray-50'}`}
+              className={`inline-flex items-center px-3 py-2 border text-sm font-medium rounded-md ${viewMode === 'individual' ? 'bg-emerald-100 border-emerald-300 text-emerald-700' : 'border-gray-300 text-gray-700 bg-white hover:bg-gray-50'}`}
             >
               <List className="h-4 w-4 mr-1" />
               Individual

@@ -101,7 +101,7 @@ const EditAnalysis = () => {
   if (loading) {
     return (
       <div className="p-6 flex justify-center items-center">
-        <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-indigo-500"></div>
+        <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-emerald-500"></div>
       </div>
     );
   }
@@ -148,7 +148,7 @@ const EditAnalysis = () => {
                 name="title"
                 value={analysis.title || ''}
                 onChange={handleInputChange}
-                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-emerald-500 focus:border-emerald-500"
                 required
               />
             </div>
@@ -159,7 +159,7 @@ const EditAnalysis = () => {
                 name="authorName"
                 value={analysis.authorName || analysis.author_name || ''}
                 onChange={handleInputChange}
-                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-emerald-500 focus:border-emerald-500"
                 required
               />
             </div>
@@ -171,7 +171,7 @@ const EditAnalysis = () => {
               value={analysis.description || ''}
               onChange={handleInputChange}
               rows={3}
-              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-emerald-500 focus:border-emerald-500"
             />
           </div>
         </div>
@@ -188,7 +188,7 @@ const EditAnalysis = () => {
                       type="text"
                       value={plot.title || ''}
                       onChange={(e) => handlePlotTextChange(index, 'title', e.target.value)}
-                      className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                      className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-emerald-500 focus:border-emerald-500"
                     />
                   </div>
                 </div>
@@ -197,7 +197,7 @@ const EditAnalysis = () => {
                   <textarea
                     value={plot.description || ''}
                     onChange={(e) => handlePlotTextChange(index, 'description', e.target.value)}
-                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-emerald-500 focus:border-emerald-500"
                     rows={2}
                   />
                 </div>
@@ -231,7 +231,7 @@ const EditAnalysis = () => {
           <button
             type="submit"
             disabled={saveLoading}
-            className={`px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${
+            className={`px-6 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 ${
               saveLoading ? 'opacity-70 cursor-not-allowed' : ''
             }`}
           >

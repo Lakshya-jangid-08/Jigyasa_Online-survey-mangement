@@ -164,7 +164,7 @@ const SavedAnalysis = () => {
   if (loading) {
     return (
       <div className="p-6 flex justify-center items-center">
-        <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-indigo-500"></div>
+        <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-emerald-500"></div>
       </div>
     );
   }
@@ -175,7 +175,7 @@ const SavedAnalysis = () => {
         <h1 className="text-2xl font-semibold text-gray-900">Saved Analyses</h1>
         <Link
           to="/dashboard/survey-analyzer"
-          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700"
+          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-emerald-600 hover:bg-emerald-700"
         >
           New Analysis
         </Link>
@@ -201,7 +201,7 @@ const SavedAnalysis = () => {
                     <h3 className="text-lg font-medium text-gray-900">
                       <button 
                         onClick={() => toggleAnalysisPlots(analysis._id)}
-                        className="hover:text-indigo-600 focus:outline-none flex items-center"
+                        className="hover:text-emerald-600 focus:outline-none flex items-center"
                       >
                         <span>{analysis.title}</span>
                         <span className="ml-2 text-xs">

@@ -83,15 +83,15 @@ const ProfileCard = () => {
   return (
     <div className="bg-white shadow rounded-lg overflow-hidden max-w-md mx-auto transition-all duration-300 hover:shadow-md">
       {/* Header with accent color */}
-      <div className="bg-indigo-100 h-24"></div>
+      <div className="bg-emerald-100 h-24"></div>
       
       {/* Profile content */}
       <div className="relative px-6 py-8">
         {/* Avatar */}
         <div className="absolute -top-12 left-1/2 transform -translate-x-1/2">
           <div className="bg-white rounded-full p-2 shadow-md">
-            <div className="bg-indigo-100 rounded-full p-4 flex items-center justify-center">
-              <User className="h-12 w-12 text-indigo-500" />
+            <div className="bg-emerald-100 rounded-full p-4 flex items-center justify-center">
+              <User className="h-12 w-12 text-emerald-500" />
             </div>
           </div>
         </div>

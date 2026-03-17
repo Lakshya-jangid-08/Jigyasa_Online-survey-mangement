@@ -354,7 +354,7 @@ const SurveyAnalyzer = () => {
           type="file"
           accept=".csv"
           onChange={handleFileUpload}
-          className="mt-4 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          className="mt-4 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"
         />
         {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
         {loading && <p className="mt-2 text-sm text-gray-500">Loading...</p>}
@@ -367,20 +367,20 @@ const SurveyAnalyzer = () => {
           placeholder="Analysis Title"
           value={analysisTitle}
           onChange={(e) => setAnalysisTitle(e.target.value)}
-          className="mt-4 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          className="mt-4 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"
         />
         <input
           type="text"
           placeholder="Author Name"
           value={authorName}
           onChange={(e) => setAuthorName(e.target.value)}
-          className="mt-4 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          className="mt-4 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"
         />
         <textarea
           placeholder="Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          className="mt-4 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          className="mt-4 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"
         />
       </div>
 
@@ -391,7 +391,7 @@ const SurveyAnalyzer = () => {
           <select
             multiple
             onChange={(e) => generateGroupBy(Array.from(e.target.selectedOptions, option => option.value))}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"
           >
             {columns.map((col) => (
               <option key={col} value={col}>{col}</option>
@@ -432,7 +432,7 @@ const SurveyAnalyzer = () => {
           <h2 className="text-lg font-medium text-gray-900">3. Create Plots</h2>
           <button
             onClick={addPlot}
-            className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+            className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700"
           >
             Add Plot
           </button>
@@ -445,7 +445,7 @@ const SurveyAnalyzer = () => {
                   <select
                     value={plot.type}
                     onChange={(e) => updatePlot(index, 'type', e.target.value)}
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"
                   >
                     <option value="">Select Plot Type</option>
                     <option value="scatter">Scatter Plot</option>
@@ -467,7 +467,7 @@ const SurveyAnalyzer = () => {
                       <select
                         value={plot.xAxis}
                         onChange={(e) => updatePlot(index, 'xAxis', e.target.value)}
-                        className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"
                       >
                         <option value="">Select {plot.type === 'heatmap' ? 'Row Variable' : 'X-Axis'}</option>
                         {columns.map((col) => (
@@ -485,7 +485,7 @@ const SurveyAnalyzer = () => {
                           multiple
                           value={plot.yAxes}
                           onChange={(e) => updatePlot(index, 'yAxes', Array.from(e.target.selectedOptions, option => option.value))}
-                          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"
                         >
                           {columns.map((col) => (
                             <option key={col} value={col}>{col}</option>
@@ -501,7 +501,7 @@ const SurveyAnalyzer = () => {
 
                     <button
                       onClick={() => generatePlot(index)}
-                      className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+                      className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700"
                     >
                       Generate Plot
                     </button>

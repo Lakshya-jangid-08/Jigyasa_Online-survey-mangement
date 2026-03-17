@@ -240,7 +240,7 @@ const SurveyCreator = () => {
                   name="title"
                   id="title"
                   required
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"
                   value={formData.title}
                   onChange={handleChange}
                 />
@@ -254,7 +254,7 @@ const SurveyCreator = () => {
                   name="description"
                   id="description"
                   rows={3}
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"
                   value={formData.description}
                   onChange={handleChange}
                 />
@@ -270,12 +270,12 @@ const SurveyCreator = () => {
                       type="checkbox"
                       name="requires_organization"
                       id="requires_organization"
-                      className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                      className="h-4 w-4 text-emerald-600 focus:ring-emerald-500 border-gray-300 rounded"
                       checked={formData.requires_organization}
                       onChange={handleChange}
                     />
                     <label htmlFor="requires_organization" className="ml-2 text-sm text-gray-700 inline-flex items-center">
-                      <Shield className="h-4 w-4 mr-1 text-indigo-600" />
+                      <Shield className="h-4 w-4 mr-1 text-emerald-600" />
                       Organization-specific survey
                       <span className="text-xs text-gray-500 ml-2">(Only users from the same organization can access)</span>
                     </label>
@@ -290,7 +290,7 @@ const SurveyCreator = () => {
                       <select
                         name="organization_id"
                         id="organization_id"
-                        className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                        className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm rounded-md"
                         value={formData.organization_id}
                         onChange={handleChange}
                         required={formData.requires_organization}
@@ -309,7 +309,7 @@ const SurveyCreator = () => {
                       type="checkbox"
                       name="is_active"
                       id="is_active"
-                      className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                      className="h-4 w-4 text-emerald-600 focus:ring-emerald-500 border-gray-300 rounded"
                       checked={formData.is_active}
                       onChange={handleChange}
                     />
@@ -325,7 +325,7 @@ const SurveyCreator = () => {
                   type="checkbox"
                   name="requires_organization"
                   id="requires_organization"
-                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                  className="h-4 w-4 text-emerald-600 focus:ring-emerald-500 border-gray-300 rounded"
                   checked={formData.requires_organization}
                   onChange={handleChange}
                 />
@@ -343,7 +343,7 @@ const SurveyCreator = () => {
                     name="organization_id"
                     id="organization_id"
                     required
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"
                     value={formData.organization_id}
                     onChange={handleChange}
                   >
@@ -363,7 +363,7 @@ const SurveyCreator = () => {
                   <button
                     type="button"
                     onClick={addQuestion}
-                    className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-emerald-700 bg-emerald-100 hover:bg-emerald-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
                   >
                     <Plus className="h-4 w-4 mr-1" />
                     Add Question
@@ -392,7 +392,7 @@ const SurveyCreator = () => {
                           type="text"
                           value={question.text}
                           onChange={(e) => handleQuestionChange(index, 'text', e.target.value)}
-                          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"
                           required
                         />
                       </div>
@@ -404,7 +404,7 @@ const SurveyCreator = () => {
                         <select
                           value={question.question_type}
                           onChange={(e) => handleQuestionChange(index, 'question_type', e.target.value)}
-                          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"
                         >
                           <option value="text">Text</option>
                           <option value="multiple_choice">Multiple Choice</option>
@@ -421,7 +421,7 @@ const SurveyCreator = () => {
                             <button
                               type="button"
                               onClick={() => addOption(index)}
-                              className="inline-flex items-center px-2 py-1 border border-transparent text-xs font-medium rounded text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                              className="inline-flex items-center px-2 py-1 border border-transparent text-xs font-medium rounded text-emerald-700 bg-emerald-100 hover:bg-emerald-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
                             >
                               <Plus className="h-3 w-3 mr-1" />
                               Add Option
@@ -433,7 +433,7 @@ const SurveyCreator = () => {
                                 type="text"
                                 value={choice.text}
                                 onChange={(e) => handleOptionChange(index, optionIndex, e.target.value)}
-                                className="flex-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                className="flex-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"
                                 placeholder={`Option ${optionIndex + 1}`}
                                 required
                               />
@@ -454,7 +454,7 @@ const SurveyCreator = () => {
                           type="checkbox"
                           checked={question.required}
                           onChange={(e) => handleQuestionChange(index, 'required', e.target.checked)}
-                          className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                          className="h-4 w-4 text-emerald-600 focus:ring-emerald-500 border-gray-300 rounded"
                         />
                         <label className="ml-2 block text-sm text-gray-900">
                           Required
@@ -469,7 +469,7 @@ const SurveyCreator = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
                 >
                   {loading ? 'Creating...' : 'Create Survey'}
                 </button>

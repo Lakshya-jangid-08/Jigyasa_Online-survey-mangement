@@ -79,7 +79,7 @@ const SignupForm = () => {
             required
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2"
+            className="focus:ring-emerald-500 focus:border-emerald-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2"
             placeholder="John Doe"
           />
         </div>
@@ -101,7 +101,7 @@ const SignupForm = () => {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2"
+            className="focus:ring-emerald-500 focus:border-emerald-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2"
             placeholder="you@example.com"
           />
         </div>
@@ -123,7 +123,7 @@ const SignupForm = () => {
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2"
+            className="focus:ring-emerald-500 focus:border-emerald-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2"
             placeholder="••••••••"
           />
         </div>
@@ -145,7 +145,7 @@ const SignupForm = () => {
             required
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2"
+            className="focus:ring-emerald-500 focus:border-emerald-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2"
             placeholder="••••••••"
           />
         </div>
@@ -155,7 +155,7 @@ const SignupForm = () => {
         <button
           type="submit"
           disabled={isLoading}
-          className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${isLoading ? 'opacity-70 cursor-not-allowed' : ''}`}
+          className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 ${isLoading ? 'opacity-70 cursor-not-allowed' : ''}`}
         >
           {isLoading ? 'Creating account...' : 'Create account'}
         </button>

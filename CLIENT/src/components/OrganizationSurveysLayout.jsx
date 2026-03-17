@@ -97,7 +97,7 @@ const OrganizationSurveysLayout = () => {
                   </div>
                   <button
                     onClick={() => navigate(`/dashboard/surveys/${survey.id}`)}
-                    className="text-indigo-600 hover:text-indigo-900"
+                    className="text-emerald-600 hover:text-emerald-900"
                     disabled={!survey.is_active}
                   >
                     {survey.is_active ? 'View' : 'Unavailable'}

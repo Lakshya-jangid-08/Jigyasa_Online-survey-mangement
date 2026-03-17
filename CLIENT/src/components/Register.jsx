@@ -114,7 +114,7 @@ const Register = () => {
                 required
                 className={`appearance-none rounded-none relative block w-full px-3 py-2 border ${
                   validationErrors.email ? 'border-red-300' : 'border-gray-300'
-                } placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
+                } placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 focus:z-10 sm:text-sm`}
                 placeholder="Email address"
                 value={formData.email}
                 onChange={handleChange}
@@ -134,7 +134,7 @@ const Register = () => {
                 required
                 className={`appearance-none rounded-none relative block w-full px-3 py-2 border ${
                   validationErrors.username ? 'border-red-300' : 'border-gray-300'
-                } placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
+                } placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 focus:z-10 sm:text-sm`}
                 placeholder="Username"
                 value={formData.username}
                 onChange={handleChange}
@@ -153,7 +153,7 @@ const Register = () => {
                 type="tel"
                 className={`appearance-none rounded-none relative block w-full px-3 py-2 border ${
                   validationErrors.phone_number ? 'border-red-300' : 'border-gray-300'
-                } placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
+                } placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 focus:z-10 sm:text-sm`}
                 placeholder="Phone Number (optional)"
                 value={formData.phone_number}
                 onChange={handleChange}
@@ -173,7 +173,7 @@ const Register = () => {
                 required
                 className={`appearance-none rounded-none relative block w-full px-3 py-2 border ${
                   validationErrors.password ? 'border-red-300' : 'border-gray-300'
-                } placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
+                } placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 focus:z-10 sm:text-sm`}
                 placeholder="Password"
                 value={formData.password}
                 onChange={handleChange}
@@ -193,7 +193,7 @@ const Register = () => {
                 required
                 className={`appearance-none rounded-none relative block w-full px-3 py-2 border ${
                   validationErrors.password2 ? 'border-red-300' : 'border-gray-300'
-                } placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
+                } placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 focus:z-10 sm:text-sm`}
                 placeholder="Confirm Password"
                 value={formData.password2}
                 onChange={handleChange}
@@ -211,7 +211,7 @@ const Register = () => {
           <div>
             <button
               type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
             >
               Register
             </button>
@@ -220,7 +220,7 @@ const Register = () => {
         <div className="text-center">
           <p className="text-sm text-gray-600">
             Already have an account?{' '}
-            <Link to="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
+            <Link to="/login" className="font-medium text-emerald-600 hover:text-emerald-500">
               Sign in
             </Link>
           </p>

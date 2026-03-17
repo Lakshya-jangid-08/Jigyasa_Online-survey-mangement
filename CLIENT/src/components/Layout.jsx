@@ -57,7 +57,7 @@ const Layout = () => {
               <div className="flex items-center">
                 <button
                   onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                  className="inline-flex items-center justify-center p-2 rounded-md text-gray-500 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                  className="inline-flex items-center justify-center p-2 rounded-md text-gray-500 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-emerald-500"
                 >
                   <span className="sr-only">Open menu</span>
                   {mobileMenuOpen ? (
@@ -71,8 +71,8 @@ const Layout = () => {
               {/* Profile dropdown - Always visible */}
               <div className="relative group">
                 <div className="flex items-center cursor-pointer">
-                  <div className="bg-indigo-100 rounded-full p-1 hover:bg-indigo-200 transition-colors">
-                    <User className="h-5 w-5 text-indigo-600" />
+                  <div className="bg-emerald-100 rounded-full p-1 hover:bg-emerald-200 transition-colors">
+                    <User className="h-5 w-5 text-emerald-600" />
                   </div>
                 </div>
                 
@@ -112,7 +112,7 @@ const Layout = () => {
                   to={link.path}
                   className={`block pl-3 pr-4 py-2 text-base font-medium ${
                     location.pathname === link.path
-                      ? 'bg-indigo-50 border-l-4 border-indigo-500 text-indigo-700'
+                      ? 'bg-emerald-50 border-l-4 border-emerald-500 text-emerald-700'
                       : 'border-l-4 border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800'
                   }`}
                 >

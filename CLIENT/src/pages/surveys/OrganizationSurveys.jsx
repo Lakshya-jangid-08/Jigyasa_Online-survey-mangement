@@ -90,7 +90,7 @@ const OrganizationSurveys = () => {
         <h1 className="text-2xl font-semibold text-gray-900">Organization Surveys</h1>
         <Link
           to="/dashboard/surveys/create"
-          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
         >
           <PlusCircle className="h-4 w-4 mr-2" />
           Create Survey
@@ -136,7 +136,7 @@ const OrganizationSurveys = () => {
                       </span>
                       <Link
                         to={`/dashboard/surveys/${survey.id}`}
-                        className="text-indigo-600 hover:text-indigo-900"
+                        className="text-emerald-600 hover:text-emerald-900"
                       >
                         View
                       </Link>

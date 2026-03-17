@@ -44,7 +44,7 @@ const LoginForm = () => {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="focus:ring-indigo-500 focus:border-indigo-500 block w-full px-3 sm:text-md outline-none border-2 border-opacity-15 border-black rounded-md py-2"
+            className="focus:ring-emerald-500 focus:border-emerald-500 block w-full px-3 sm:text-md outline-none border-2 border-opacity-15 border-black rounded-md py-2"
             placeholder="Enter Email"
           />
         </div>
@@ -63,7 +63,7 @@ const LoginForm = () => {
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="focus:ring-indigo-500 focus:border-indigo-500 block w-full px-3 sm:text-md outline-none border-2 border-opacity-15 border-black rounded-md py-2"
+            className="focus:ring-emerald-500 focus:border-emerald-500 block w-full px-3 sm:text-md outline-none border-2 border-opacity-15 border-black rounded-md py-2"
             placeholder="Enter Password"
           />
         </div>
@@ -72,7 +72,7 @@ const LoginForm = () => {
       <div>
         <button
           type="submit"
-          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
         >
           Sign in
         </button>

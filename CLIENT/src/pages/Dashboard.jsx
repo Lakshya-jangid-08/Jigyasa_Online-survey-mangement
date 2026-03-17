@@ -96,7 +96,7 @@ const Dashboard = () => {
         <h1 className="text-2xl font-semibold text-gray-900">Dashboard</h1>
         <Link
           to="/dashboard/surveys/create"
-          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
         >
           <PlusCircle className="h-4 w-4 mr-2" />
           Create Survey
@@ -166,7 +166,7 @@ const Dashboard = () => {
                   </div>
                   <Link
                     to="/dashboard/surveys/create"
-                    className="text-indigo-600 hover:text-indigo-900"
+                    className="text-emerald-600 hover:text-emerald-900"
                   >
                     Create Survey
                   </Link>
@@ -183,7 +183,7 @@ const Dashboard = () => {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center">
                           <ClipboardList className="h-5 w-5 text-gray-400" />
-                          <p className="ml-2 text-sm font-medium text-indigo-600">
+                          <p className="ml-2 text-sm font-medium text-emerald-600">
                             {survey.title}
                           </p>
                         </div>

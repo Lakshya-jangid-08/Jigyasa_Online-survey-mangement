@@ -206,7 +206,7 @@ const SurveyDetail = () => {
         <div className="mb-6">
           <Link
             to="/dashboard/surveys"
-            className="inline-flex items-center text-indigo-600 hover:text-indigo-900"
+            className="inline-flex items-center text-emerald-600 hover:text-emerald-900"
           >
             <ArrowLeft className="h-4 w-4 mr-1" />
             Back to Surveys
@@ -391,7 +391,7 @@ const SurveyDetail = () => {
               />
               <button
                 onClick={copyToClipboard}
-                className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700"
               >
                 Copy
               </button>

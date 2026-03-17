@@ -243,7 +243,7 @@ const SurveyResponse = () => {
           {showLoginPrompt && (
             <button
               onClick={() => navigate('/login')}
-              className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+              className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700"
             >
               Login to Continue
             </button>
@@ -288,7 +288,7 @@ const SurveyResponse = () => {
                       type="text"
                       className={`mt-1 block w-full border ${
                         validationErrors[question.id] ? 'border-red-500' : 'border-gray-300'
-                      } rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
+                      } rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm`}
                       value={answers[question.id] || ''}
                       onChange={(e) => handleAnswerChange(question.id, e.target.value)}
                       required={question.required}
@@ -301,7 +301,7 @@ const SurveyResponse = () => {
                         <div key={choice.id} className="flex items-center">
                           <input
                             type="checkbox"
-                            className={`h-4 w-4 text-indigo-600 focus:ring-indigo-500 ${
+                            className={`h-4 w-4 text-emerald-600 focus:ring-emerald-500 ${
                               validationErrors[question.id] ? 'border-red-500' : 'border-gray-300'
                             } rounded`}
                             checked={answers[question.id]?.choices?.includes(choice.id) || false}
@@ -322,7 +322,7 @@ const SurveyResponse = () => {
                           <input
                             type="radio"
                             name={`question-${question.id}`}
-                            className={`h-4 w-4 text-indigo-600 focus:ring-indigo-500 ${
+                            className={`h-4 w-4 text-emerald-600 focus:ring-emerald-500 ${
                               validationErrors[question.id] ? 'border-red-500' : 'border-gray-300'
                             }`}
                             checked={answers[question.id]?.choice === choice.id}
@@ -343,7 +343,7 @@ const SurveyResponse = () => {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
                 >
                   {submitting ? 'Submitting...' : 'Submit Response'}
                 </button>

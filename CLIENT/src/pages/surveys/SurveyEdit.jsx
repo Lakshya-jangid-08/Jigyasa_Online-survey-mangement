@@ -320,7 +320,7 @@ const SurveyEdit = () => {
               type="text"
               value={survey.title}
               onChange={(e) => setSurvey({ ...survey, title: e.target.value })}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
               required
             />
           </div>
@@ -330,7 +330,7 @@ const SurveyEdit = () => {
             <textarea
               value={survey.description}
               onChange={(e) => setSurvey({ ...survey, description: e.target.value })}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
               rows={3}
             />
           </div>
@@ -341,7 +341,7 @@ const SurveyEdit = () => {
                 type="checkbox"
                 checked={survey.is_active}
                 onChange={(e) => setSurvey({ ...survey, is_active: e.target.checked })}
-                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                className="rounded border-gray-300 text-emerald-600 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
               />
               <span className="ml-2 text-sm text-gray-700">Active</span>
             </label>
@@ -353,7 +353,7 @@ const SurveyEdit = () => {
                 type="checkbox"
                 checked={survey.requires_organization}
                 onChange={(e) => setSurvey({ ...survey, requires_organization: e.target.checked })}
-                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                className="rounded border-gray-300 text-emerald-600 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
               />
               <span className="ml-2 text-sm text-gray-700">Require organization access</span>
             </label>
@@ -365,7 +365,7 @@ const SurveyEdit = () => {
               <select
                 value={survey.organization_id || ''}
                 onChange={(e) => setSurvey({ ...survey, organization_id: e.target.value || null })}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
                 required={survey.requires_organization}
               >
                 <option value="">Select an organization</option>
@@ -387,7 +387,7 @@ const SurveyEdit = () => {
               <button
                 type="button"
                 onClick={addQuestion}
-                className="inline-flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+                className="inline-flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700"
               >
                 <Plus className="h-4 w-4 mr-1" />
                 Add Question
@@ -414,7 +414,7 @@ const SurveyEdit = () => {
                       type="text"
                       value={question.text}
                       onChange={(e) => handleQuestionChange(questionIndex, 'text', e.target.value)}
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
                       required
                     />
                   </div>
@@ -424,7 +424,7 @@ const SurveyEdit = () => {
                     <select
                       value={question.question_type}
                       onChange={(e) => handleQuestionChange(questionIndex, 'question_type', e.target.value)}
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
                       required
                     >
                       <option value="">Select a question type</option>
@@ -441,7 +441,7 @@ const SurveyEdit = () => {
                         <button
                           type="button"
                           onClick={() => addChoice(questionIndex)}
-                          className="inline-flex items-center px-2 py-1 border border-transparent text-xs font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+                          className="inline-flex items-center px-2 py-1 border border-transparent text-xs font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700"
                         >
                           <Plus className="h-3 w-3 mr-1" />
                           Add Choice
@@ -454,7 +454,7 @@ const SurveyEdit = () => {
                             type="text"
                             value={choice.text}
                             onChange={(e) => handleChoiceChange(questionIndex, choiceIndex, e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
                             required
                           />
                           <button
@@ -475,7 +475,7 @@ const SurveyEdit = () => {
                         type="checkbox"
                         checked={question.required}
                         onChange={(e) => handleQuestionChange(questionIndex, 'required', e.target.checked)}
-                        className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                        className="rounded border-gray-300 text-emerald-600 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
                       />
                       <span className="ml-2 text-sm text-gray-700">Required</span>
                     </label>
@@ -495,7 +495,7 @@ const SurveyEdit = () => {
             </button>
             <button
               type="submit"
-              className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+              className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700"
             >
               Save Changes
             </button>

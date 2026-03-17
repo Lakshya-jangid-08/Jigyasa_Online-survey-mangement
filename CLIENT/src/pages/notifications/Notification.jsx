@@ -99,7 +99,7 @@ const Notification = () => {
             </div>
             <div>
               <button 
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
                 onClick={() => setNewSurveys([])} // Mark all as read
               >
                 Mark all as read
@@ -191,7 +191,7 @@ const Notification = () => {
                   {survey.is_active ? (
                     <Link
                       to={`/survey-response/${survey.creator?._id || survey.creator || survey.user}/${survey.id || survey._id}/`}
-                      className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 text-sm"
+                      className="px-4 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 text-sm"
                     >
                       Respond
                     </Link>
@@ -235,7 +235,7 @@ const Notification = () => {
                   {survey.is_active ? (
                     <Link
                       to={`/survey-response/${survey.creator?._id || survey.creator || survey.user}/${survey.id || survey._id}/`}
-                      className="text-indigo-600 hover:text-indigo-900"
+                      className="text-emerald-600 hover:text-emerald-900"
                     >
                       View
                     </Link>
