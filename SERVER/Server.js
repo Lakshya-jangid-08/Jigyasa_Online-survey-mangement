@@ -5,6 +5,7 @@ const config = require('./CONFIG/config');
 const connectDB = require('./CONFIG/db');
 const { notFound, errorHandler } = require('./MIDDLEWARE/errorMiddleware');
 const requestLogger = require('./MIDDLEWARE/requestLogger');
+const noCacheMiddleware = require('./MIDDLEWARE/noCacheMiddleware');
 const app = express();
 connectDB();
 
@@ -22,6 +23,9 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
+
+// Add no-cache headers for API endpoints (fixes Vercel caching issue)
+app.use('/api', noCacheMiddleware);
 
 // Set static folder
 app.use(express.static(path.join(__dirname, 'PUBLIC')));
@@ -52,8 +56,13 @@ app.use('/api/api', require('./ROUTES/ApiCompatibility.route'));
 app.use(notFound);
 app.use(errorHandler);
 
-const PORT = process.env.PORT || config.server.port || 3000;
-  
-app.listen(PORT, () => {
-  console.log(`Server running in ${config.server.env} mode on port ${PORT}`);
-});
+// Export app for Vercel serverless
+module.exports = app;
+
+// For local development, run the server
+if (require.main === module) {
+  const PORT = process.env.PORT || config.server.port || 3000;
+  app.listen(PORT, () => {
+    console.log(`Server running in ${config.server.env} mode on port ${PORT}`);
+  });
+}
