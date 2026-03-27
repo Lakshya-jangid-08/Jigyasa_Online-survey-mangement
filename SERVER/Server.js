@@ -6,8 +6,8 @@ const connectDB = require('./CONFIG/db');
 const { notFound, errorHandler } = require('./MIDDLEWARE/errorMiddleware');
 const requestLogger = require('./MIDDLEWARE/requestLogger');
 const noCacheMiddleware = require('./MIDDLEWARE/noCacheMiddleware');
+
 const app = express();
-connectDB();
 
 // Request logger middleware
 app.use(requestLogger);
@@ -61,8 +61,22 @@ module.exports = app;
 
 // For local development, run the server
 if (require.main === module) {
-  const PORT = process.env.PORT || config.server.port || 3000;
-  app.listen(PORT, () => {
-    console.log(`Server running in ${config.server.env} mode on port ${PORT}`);
-  });
+  const startServer = async () => {
+    try {
+      // CRITICAL: Wait for database connection before starting server
+      console.log('⏳ Connecting to MongoDB...');
+      await connectDB();
+      
+      const PORT = process.env.PORT || config.server.port || 3000;
+      app.listen(PORT, () => {
+        console.log(`\n✓ Server running in ${config.server.env} mode on port ${PORT}`);
+        console.log(`✓ Ready to accept requests\n`);
+      });
+    } catch (error) {
+      console.error('✗ Failed to start server:', error.message);
+      process.exit(1);
+    }
+  };
+
+  startServer();
 }
