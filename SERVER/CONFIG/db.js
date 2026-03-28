@@ -30,8 +30,8 @@ const connectDB = async () => {
       retryWrites: true,
       retryReads: true,
       
-      // Buffer timeout prevention
-      bufferCommands: false,
+      // Allow command buffering during connection
+      bufferCommands: true,
       
       // Other options
       ssl: true,

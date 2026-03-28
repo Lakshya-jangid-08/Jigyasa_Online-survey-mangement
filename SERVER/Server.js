@@ -27,6 +27,19 @@ app.use(cors({
 // Add no-cache headers for API endpoints (fixes Vercel caching issue)
 app.use('/api', noCacheMiddleware);
 
+// Middleware to ensure database connection before handling requests
+let isDBReady = false;
+const dbReadyMiddleware = (req, res, next) => {
+  if (req.path === '/api/health' || req.path === '/' || req.path.includes('/favicon')) {
+    return next();
+  }
+  if (isDBReady) {
+    return next();
+  }
+  res.status(503).json({ message: 'Database is connecting. Please try again.' });
+};
+app.use(dbReadyMiddleware);
+
 // Set static folder
 app.use(express.static(path.join(__dirname, 'PUBLIC')));
 
@@ -58,9 +71,14 @@ app.use(errorHandler);
 
 // CRITICAL: Initialize database connection for both local and Vercel
 console.log('⏳ Initializing database connection...');
-connectDB().catch(error => {
-  console.error('Failed to connect to database:', error.message);
-});
+connectDB()
+  .then(() => {
+    isDBReady = true;
+    console.log('✓ Database ready for requests');
+  })
+  .catch(error => {
+    console.error('Failed to connect to database:', error.message);
+  });
 
 // Export app for Vercel serverless
 module.exports = app;
