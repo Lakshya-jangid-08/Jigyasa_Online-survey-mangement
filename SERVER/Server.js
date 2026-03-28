@@ -6,8 +6,8 @@ const connectDB = require('./CONFIG/db');
 const { notFound, errorHandler } = require('./MIDDLEWARE/errorMiddleware');
 const requestLogger = require('./MIDDLEWARE/requestLogger');
 const noCacheMiddleware = require('./MIDDLEWARE/noCacheMiddleware');
-
 const app = express();
+connectDB();
 
 // Request logger middleware
 app.use(requestLogger);
@@ -26,19 +26,6 @@ app.use(cors({
 
 // Add no-cache headers for API endpoints (fixes Vercel caching issue)
 app.use('/api', noCacheMiddleware);
-
-// Middleware to ensure database connection before handling requests
-let isDBReady = false;
-const dbReadyMiddleware = (req, res, next) => {
-  if (req.path === '/api/health' || req.path === '/' || req.path.includes('/favicon')) {
-    return next();
-  }
-  if (isDBReady) {
-    return next();
-  }
-  res.status(503).json({ message: 'Database is connecting. Please try again.' });
-};
-app.use(dbReadyMiddleware);
 
 // Set static folder
 app.use(express.static(path.join(__dirname, 'PUBLIC')));
@@ -69,35 +56,13 @@ app.use('/api/api', require('./ROUTES/ApiCompatibility.route'));
 app.use(notFound);
 app.use(errorHandler);
 
-// CRITICAL: Initialize database connection for both local and Vercel
-console.log('⏳ Initializing database connection...');
-connectDB()
-  .then(() => {
-    isDBReady = true;
-    console.log('✓ Database ready for requests');
-  })
-  .catch(error => {
-    console.error('Failed to connect to database:', error.message);
-  });
-
 // Export app for Vercel serverless
 module.exports = app;
 
 // For local development, run the server
 if (require.main === module) {
-  const startServer = async () => {
-    try {
-      // Database is already connecting above, just wait and start server
-      const PORT = process.env.PORT || config.server.port || 3000;
-      app.listen(PORT, () => {
-        console.log(`\nServer running in ${config.server.env} mode on port ${PORT}`);
-        console.log(`Ready to accept requests\n`);
-      });
-    } catch (error) {
-      console.error('Failed to start server:', error.message);
-      process.exit(1);
-    }
-  };
-
-  startServer();
+  const PORT = process.env.PORT || config.server.port || 3000;
+  app.listen(PORT, () => {
+    console.log(`Server running in ${config.server.env} mode on port ${PORT}`);
+  });
 }
