@@ -7,10 +7,7 @@ const { notFound, errorHandler } = require('./MIDDLEWARE/errorMiddleware');
 const requestLogger = require('./MIDDLEWARE/requestLogger');
 const noCacheMiddleware = require('./MIDDLEWARE/noCacheMiddleware');
 const app = express();
-connectDB();
 
-// Request logger middleware
-app.use(requestLogger);
 
 // Body parser middleware
 app.use(express.json({ limit: '10mb' }));
@@ -23,6 +20,16 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
+
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    console.error("DB connection failed");
+    res.status(500).json({ message: "Database connection error" });
+  }
+});
 
 // Add no-cache headers for API endpoints (fixes Vercel caching issue)
 app.use('/api', noCacheMiddleware);

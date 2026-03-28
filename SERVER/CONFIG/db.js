@@ -1,18 +1,21 @@
-  const mongoose = require('mongoose');
-  const config = require('./config');
+const mongoose = require('mongoose');
+const config = require('./config');
 
-  const connectDB = async () => {
-    try {
-      const connect = await mongoose.connect(config.db.uri).then(() => {
-        console.log('MongoDB connected successfully');
-      });
-      return connect;
-    } catch (error) {
-      console.error(`MongoDB Connection Error: ${error.message}`);
-      // Don't exit the process, return null instead
-      // This allows the server to still run and serve static content
-      return null;
-    }
-  };
+let isConnected = false;
 
-  module.exports = connectDB;
+const connectDB = async () => {
+  if (isConnected) return;
+
+  try {
+    const conn = await mongoose.connect(config.db.uri);
+
+    isConnected = conn.connections[0].readyState === 1;
+
+    console.log('MongoDB connected successfully');
+  } catch (error) {
+    console.error(`MongoDB Connection Error: ${error.message}`);
+    throw error; 
+  }
+};
+
+module.exports = connectDB;
