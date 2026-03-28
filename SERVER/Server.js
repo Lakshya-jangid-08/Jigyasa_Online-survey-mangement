@@ -56,6 +56,12 @@ app.use('/api/api', require('./ROUTES/ApiCompatibility.route'));
 app.use(notFound);
 app.use(errorHandler);
 
+// CRITICAL: Initialize database connection for both local and Vercel
+console.log('⏳ Initializing database connection...');
+connectDB().catch(error => {
+  console.error('Failed to connect to database:', error.message);
+});
+
 // Export app for Vercel serverless
 module.exports = app;
 
@@ -63,17 +69,14 @@ module.exports = app;
 if (require.main === module) {
   const startServer = async () => {
     try {
-      // CRITICAL: Wait for database connection before starting server
-      console.log('⏳ Connecting to MongoDB...');
-      await connectDB();
-      
+      // Database is already connecting above, just wait and start server
       const PORT = process.env.PORT || config.server.port || 3000;
       app.listen(PORT, () => {
-        console.log(`\n✓ Server running in ${config.server.env} mode on port ${PORT}`);
-        console.log(`✓ Ready to accept requests\n`);
+        console.log(`\nServer running in ${config.server.env} mode on port ${PORT}`);
+        console.log(`Ready to accept requests\n`);
       });
     } catch (error) {
-      console.error('✗ Failed to start server:', error.message);
+      console.error('Failed to start server:', error.message);
       process.exit(1);
     }
   };

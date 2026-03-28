@@ -1,8 +1,16 @@
 const mongoose = require('mongoose');
 const config = require('./config');
 
+// Cache to store the connection for Vercel's serverless environment
+let connectionCache = null;
+
 const connectDB = async () => {
   try {
+    // Return cached connection if already connected
+    if (connectionCache) {
+      return connectionCache;
+    }
+
     if (!config.db.uri) {
       throw new Error('MONGODB_URI environment variable is not set');
     }
@@ -33,12 +41,16 @@ const connectDB = async () => {
 
     const connect = await mongoose.connect(config.db.uri, mongooseOptions);
     
-    console.log('✓ MongoDB connected successfully');
+    // Cache the connection for serverless environments
+    connectionCache = connect;
+    
+    console.log('MongoDB connected successfully');
     
     return connect;
   } catch (error) {
-    console.error(`✗ MongoDB Connection Error: ${error.message}`);
+    console.error(`MongoDB Connection Error: ${error.message}`);
     console.error('Fix: Check MONGODB_URI in .env file');
+    // Don't throw, let the request handler deal with it
     return null;
   }
 };
@@ -46,6 +58,16 @@ const connectDB = async () => {
 // Monitor connection events
 mongoose.connection.on('connected', () => {
   console.log('Mongoose connected to MongoDB');
+});
+
+mongoose.connection.on('disconnected', () => {
+  console.log('Mongoose disconnected from MongoDB');
+  connectionCache = null; // Clear cache on disconnect
+});
+
+mongoose.connection.on('error', (error) => {
+  console.error('Mongoose connection error:', error.message);
+  connectionCache = null; // Clear cache on error
 });
 
 mongoose.connection.on('error', (err) => {
